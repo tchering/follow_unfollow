@@ -6,7 +6,9 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validate :must_have_at_least_one_address
   has_many :addresses, dependent: :destroy
-  accepts_nested_attributes_for :addresses, allow_destroy: true
+  accepts_nested_attributes_for :addresses, allow_destroy: true, reject_if: lambda { |attributes| attributes["country"].blank? || attributes["city"].blank? }
+
+  #! You can use both reject_if and validations to achieve robust data handling. reject_if can prevent the creation of associated records with incomplete data, and validations can ensure that any created records meet the required criteria.
 
   has_secure_password
 
