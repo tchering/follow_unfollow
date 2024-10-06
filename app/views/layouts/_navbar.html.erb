@@ -1,0 +1,11 @@
+<div class="">
+  <%= link_to "Home",root_path %>
+  <% if logged_in? %>
+    <%= link_to "Logout",logout_path,data: {turbo_method: :delete} %>
+    <%= link_to "All Users", users_path %>
+    <%= link_to "EditUser",edit_user_path(current_user) %>
+  <% else %>
+    <%= link_to "Signup",signup_path %>
+    <%= link_to "Login",login_path %>
+  <% end %>
+</div>

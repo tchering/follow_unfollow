@@ -1,0 +1,51 @@
+<h1>This will be signup page to create users</h1>
+<div class="error_explaination">
+  <% if user.errors.any? %>
+    <ul>
+      <% user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
+<%= form_with(model: user, url: user.persisted? ? user_path(user) : signup_path, method: user.persisted? ? :patch : :post) do |f| %>
+  <div class="text_field">
+    <%= f.label :username, "Username" %>
+    <%= f.text_field :username %>
+  </div>
+  <div class="text_field">
+    <%= f.label :name,"Name" %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="text_field">
+    <%= f.label :email,"Email" %>
+    <%= f.email_field :email %>
+  </div>
+  <div class="text_field">
+    <%= f.label :password,"Password" %>
+    <%= f.password_field :password %>
+  </div>
+  <div class="text_field">
+    <%= f.label :password_confirmation ,"Password Confirmation" %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+  <%= f.fields_for :addresses do |address| %>
+    <div class="form_field">
+      <%= address.label :country, "Country" %>
+      <%= address.text_field :country %>
+    </div>
+    <div class="form_field">
+      <%= address.label :city, "City" %>
+      <%= address.text_field :city %>
+    </div>
+    <% if user.persisted? %>
+      <div class="form_field">
+        <%= address.check_box :_destroy %>
+        <%= address.label :_destroy, "Remove address" %>
+      </div>
+    <% end %>
+  <% end %>
+  <div class="action">
+    <%= f.submit %>
+  </div>
+<% end %>

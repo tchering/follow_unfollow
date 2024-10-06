@@ -1,0 +1,20 @@
+<div class="card mb-3 shadow-sm border">
+  <div class="card-body">
+        <h5 class="card-title">
+            <%= link_to user.name, user_path(user), class: "text-decoration-none text-dark fw-bold" %>
+        </h5>
+    <h6 class="card-subtitle mb-2 text-muted">@<%= user.username %></h6>
+        <p class="card-text text-secondary"><%= user.email %></p>
+    <p class="card-text">
+      <% user.addresses.each do |address| %>
+                <span class="badge rounded-pill bg-info text-dark me-1"><%= address.country %></span>
+                <span class="badge rounded-pill bg-info text-dark me-1"><%= address.city %></span>
+      <% end %>
+    </p>
+    <% if current_user.followings.include?(user) %>
+            <%= button_to "Unfollow", unfollow_relationship_path(user), method: :post, class: "btn btn-danger btn-sm" %>
+    <% else %>
+            <%= button_to "Follow", follow_relationship_path(user), method: :post, class: "btn btn-primary btn-sm" %>
+    <% end %>
+  </div>
+</div>
